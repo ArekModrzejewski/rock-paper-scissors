@@ -11,7 +11,7 @@ function computerPlay() {
         return 'Scissors';
     }
 }
-
+//function simulating one round, displaying result and returning result value as a string
 function playRound() {
     let playerChoice = prompt('Rock , Paper or Scissors?').toLowerCase();
     let playerChoiceCapitalized = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
@@ -54,7 +54,6 @@ function playRound() {
     else {
         result = 'invalid';
     }
-
     if (result == 'player') {
         console.log(`You win! ${playerChoiceCapitalized} beats ${computerChoice}.`);
     }
@@ -62,9 +61,34 @@ function playRound() {
         console.log(`You loose. :c ${computerChoice} beats ${playerChoiceCapitalized}.`);
     }
     else if (result == 'draw') {
-        console.log("It's a draw.")
+        console.log("It's a draw.");
     }
     else {
-        console.log('ERROR:Invalid input    Type: rock, paper or scissors')
+        console.log('ERROR:Invalid input    Type: rock, paper or scissors');
+
     }
+    return result;
 }
+//function simulating BO5 game, displaying score and end result
+function game() {
+    let playerWinsCount = 0;
+    let computerWinsCount = 0;
+    while (playerWinsCount < 3 && computerWinsCount < 3) {
+        result = playRound();
+        if (result === 'player') {
+            playerWinsCount++;
+        }
+        else if (result === 'computer') {
+            computerWinsCount++;
+        }
+        console.log('Player:Computer', playerWinsCount+':'+computerWinsCount);
+    }
+    if (playerWinsCount == 3) {
+        console.log('You win the game!!!');
+    }
+    else if (computerWinsCount == 3) {
+        console.log('Computer wins the game :ccc');
+    }
+
+}
+game()
