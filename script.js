@@ -1,23 +1,25 @@
 //computerPlay decides computer's choice
 function computerPlay() {
     let i = Math.floor(Math.random() * 3) //random integer <0,2>
-    if (i === 0) {
-        return 'Rock';
-    }
-    else if (i === 1) {
-        return 'Paper';
-    }
-    else {
-        return 'Scissors';
-    }
+    if (i === 0) return 'Rock';
+    if (i === 1) return 'Paper';
+    if (i === 2) return 'Scissors';
 }
-//function simulating one round, displaying result and returning result value as a string
-function playRound() {
-    let playerChoice = prompt('Rock , Paper or Scissors?').toLowerCase();
-    let playerChoiceCapitalized = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
+let playerScore = 0;
+let computerScore = 0;
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.id);
+        document.querySelector('#score').textContent = `Player ${playerScore}:${computerScore} Computer`;
+    });
+});
+
+//function simulating one round, displaying result
+function playRound(playerChoice) {
     let computerChoice = computerPlay();
     let result;
-    if (playerChoice == 'rock') {
+    if (playerChoice == 'Rock') {
         if (computerChoice == 'Scissors') {
             result = 'player';
         }
@@ -27,9 +29,8 @@ function playRound() {
         else {
             result = 'draw';
         }
-
     }
-    else if (playerChoice == 'paper') {
+    else if (playerChoice == 'Paper') {
         if (computerChoice == 'Rock') {
             result = 'player';
         }
@@ -40,7 +41,7 @@ function playRound() {
             result = 'draw';
         }
     }
-    else if (playerChoice == 'scissors') {
+    else if (playerChoice == 'Scissors') {
         if (computerChoice == 'Paper') {
             result = 'player';
         }
@@ -55,40 +56,25 @@ function playRound() {
         result = 'invalid';
     }
     if (result == 'player') {
-        console.log(`You win! ${playerChoiceCapitalized} beats ${computerChoice}.`);
+        document.querySelector('#result-container').textContent = (`You win! ${playerChoice} beats ${computerChoice}.`);
+        playerScore++;
     }
     else if (result == 'computer') {
-        console.log(`You loose. :c ${computerChoice} beats ${playerChoiceCapitalized}.`);
+        document.querySelector('#result-container').textContent = (`You loose. :c ${computerChoice} beats ${playerChoice}.`);
+        computerScore++;
     }
     else if (result == 'draw') {
-        console.log("It's a draw.");
+        document.querySelector('#result-container').textContent = ("It's a draw.");
     }
-    else {
-        console.log('ERROR:Invalid input    Type: rock, paper or scissors');
-
+    if (playerScore === 5) {
+        document.querySelector('#result-container').textContent = ("You won the game!");
+        playerScore = 0;
+        computerScore = 0;
     }
-    return result;
-}
-//function simulating BO5 game, displaying score and end result
-function game() {
-    let playerWinsCount = 0;
-    let computerWinsCount = 0;
-    while (playerWinsCount < 3 && computerWinsCount < 3) {
-        result = playRound();
-        if (result === 'player') {
-            playerWinsCount++;
-        }
-        else if (result === 'computer') {
-            computerWinsCount++;
-        }
-        console.log('Player:Computer', playerWinsCount+':'+computerWinsCount);
-    }
-    if (playerWinsCount == 3) {
-        console.log('You win the game!!!');
-    }
-    else if (computerWinsCount == 3) {
-        console.log('Computer wins the game :ccc');
+    if (computerScore === 5) {
+        document.querySelector('#result-container').textContent = ("Computer won the game!");
+        playerScore = 0;
+        computerScore = 0;
     }
 
 }
-game()
