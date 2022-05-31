@@ -19,51 +19,27 @@ buttons.forEach((button) => {
 function playRound(playerChoice) {
     let computerChoice = computerPlay();
     let result;
-    if (playerChoice == 'Rock') {
-        if (computerChoice == 'Scissors') {
-            result = 'player';
-        }
-        else if (computerChoice == 'Paper') {
-            result = 'computer';
-        }
-        else {
+    switch (true) {
+        case((playerChoice == 'Rock' && computerChoice == 'Scissors') || (playerChoice == 'Paper' && computerChoice == 'Rock') || (playerChoice == 'Scissors' && computerChoice == 'Paper')):
+        result = 'player';
+        break;
+        case((playerChoice == 'Rock' && computerChoice == 'Paper') || (playerChoice == 'Paper' && computerChoice == 'Scissors') || (playerChoice == 'Scissors' && computerChoice == 'Rock')):
+        result = 'computer';
+        break;
+        default:
             result = 'draw';
-        }
     }
-    else if (playerChoice == 'Paper') {
-        if (computerChoice == 'Rock') {
-            result = 'player';
-        }
-        else if (computerChoice == 'Scissors') {
-            result = 'computer';
-        }
-        else {
-            result = 'draw';
-        }
-    }
-    else if (playerChoice == 'Scissors') {
-        if (computerChoice == 'Paper') {
-            result = 'player';
-        }
-        else if (computerChoice == 'Rock') {
-            result = 'computer';
-        }
-        else {
-            result = 'draw';
-        }
-    }
-    else {
-        result = 'invalid';
-    }
-    if (result == 'player') {
+    
+    switch (result){
+    case "player":
         document.querySelector('#result-container').textContent = (`You win! ${playerChoice} beats ${computerChoice}.`);
         playerScore++;
-    }
-    else if (result == 'computer') {
-        document.querySelector('#result-container').textContent = (`You loose. :c ${computerChoice} beats ${playerChoice}.`);
+        break;
+    case "computer":
+        document.querySelector('#result-container').textContent = (`You lose. :c ${computerChoice} beats ${playerChoice}.`);
         computerScore++;
-    }
-    else if (result == 'draw') {
+        break;
+    default:
         document.querySelector('#result-container').textContent = ("It's a draw.");
     }
     if (playerScore === 5) {
